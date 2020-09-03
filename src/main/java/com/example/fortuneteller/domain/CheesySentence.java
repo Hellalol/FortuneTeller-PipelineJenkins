@@ -12,4 +12,6 @@ public class CheesySentence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String sentence;
+
 }
