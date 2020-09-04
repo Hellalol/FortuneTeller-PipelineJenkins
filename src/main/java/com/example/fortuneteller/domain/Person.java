@@ -6,6 +6,13 @@ public class Person {
     private int age;
     private String gender;
 
+    public Person(String name, String nationality, int age, String gender) {
+        this.name = name;
+        this.nationality = nationality;
+        this.age = age;
+        this.gender = gender;
+    }
+
     public String getName() {
         return name;
     }
