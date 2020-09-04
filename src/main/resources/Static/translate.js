@@ -5,7 +5,7 @@ $(document).ready(function(){
         var name = $("#name").val();
         var age = $("#age").val();
         var nationality = $("#nationality").val();
-        var gender = $("#gender").val();
+        var gender = $("input[name='gender']:checked").val();
         var url = "http://localhost:8081/submit/" + name + "/" + age + "/" + nationality + "/" + gender;
 
 
@@ -14,6 +14,8 @@ $(document).ready(function(){
             $("#quote").text("");
             return false;
         }
+
+        console.log(gender);
 
         $.ajax({
             url: url
@@ -26,3 +28,5 @@ $(document).ready(function(){
 
     });
 });
+
+
