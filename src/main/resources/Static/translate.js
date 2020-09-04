@@ -10,9 +10,9 @@ $(document).ready(function(){
 
 
         if(age > 150) {
-            $("#message").text("You are not that old, please edit age");
-            $("#quote").text("");
-            return false;
+            // $("#message").text("You are not that old, please edit age");
+            // $("#quote").text("");
+            // return false;
         }
 
         $.ajax({
