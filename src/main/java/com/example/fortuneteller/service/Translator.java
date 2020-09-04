@@ -57,8 +57,12 @@ public class Translator {
         } else {
             message.append(", " + wordsService.findWordById(randomFactor.random1to228()).get().getWord().toLowerCase());
         }
-        // third word random
-        message.append(" and " + wordsService.findWordById(randomFactor.random1to228()).get().getWord().toLowerCase());
+        // third word random from nationality length
+        for (int i = 0; i < person.getNationality().length(); i++) {
+            temp = randomFactor.random1to228();
+        }
+
+        message.append(" and " + wordsService.findWordById(temp).get().getWord().toLowerCase());
 
 
         return message.toString();

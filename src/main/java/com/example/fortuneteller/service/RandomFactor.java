@@ -21,6 +21,8 @@ public class RandomFactor {
         return ran.nextInt(228) + 1;
     }
 
+    public int randomFromStringLength (String string) {return ran.nextInt(string.length()) + 1; }
+
 
 
 }
