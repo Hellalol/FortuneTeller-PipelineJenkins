@@ -9,6 +9,12 @@ $(document).ready(function(){
         var url = "http://localhost:8081/submit/" + name + "/" + age + "/" + nationality + "/" + gender;
 
 
+        if(age > 150) {
+            $("#message").text("You are not that old, please edit age");
+            $("#quote").text("");
+            return false;
+        }
+
         $.ajax({
             url: url
         }).then(function(data) {
