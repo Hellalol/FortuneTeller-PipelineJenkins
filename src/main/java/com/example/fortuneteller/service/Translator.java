@@ -34,21 +34,31 @@ public class Translator {
 
     public String processPerson (Person person) {
         StringBuilder message = new StringBuilder();
-        message.append("You are ");
+        message.append("Your future will be ");
+
+        int genderInt = 0;
+        if(person.getGender().equals("male"))
+            genderInt = 1;
+        else if (person.getGender().equals("female"))
+            genderInt = 2;
+            else genderInt = 3;
+
 
         // first word form first letter in name
         int temp = firstletterToInt(person.getName());
         message.append(wordsService.findWordById(temp).get().getWord());
 
-        temp = person.getAge();
+        message.append(" and possibly ");
+
+        temp = person.getAge() + genderInt;
         // word from age as index, if over 200 add random word
         if (temp < 200) {
-            message.append(", " + wordsService.findWordById(temp).get().getWord());
+            message.append(wordsService.findWordById(temp).get().getWord().toLowerCase());
         } else {
-            message.append(", " + wordsService.findWordById(randomFactor.random1to228()).get().getWord());
+            message.append(", " + wordsService.findWordById(randomFactor.random1to228()).get().getWord().toLowerCase());
         }
         // third word random
-        message.append(" and " + wordsService.findWordById(randomFactor.random1to228()).get().getWord());
+        message.append(" and " + wordsService.findWordById(randomFactor.random1to228()).get().getWord().toLowerCase());
 
 
         return message.toString();

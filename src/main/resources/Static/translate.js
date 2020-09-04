@@ -15,8 +15,6 @@ $(document).ready(function(){
             return false;
         }
 
-        console.log(gender);
-
         $.ajax({
             url: url
         }).then(function(data) {
