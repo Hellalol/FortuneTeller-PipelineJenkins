@@ -68,7 +68,5 @@ public class Translator {
         return message.toString();
     }
 
-    public List<String> getAlphabetList() {
-        return alphabetList;
-    }
+
 }
