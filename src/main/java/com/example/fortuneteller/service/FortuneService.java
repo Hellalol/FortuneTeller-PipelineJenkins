@@ -16,9 +16,9 @@ public class FortuneService {
     public Optional<CheesySentence> findSentenceById(int id){return cheesySentenceRepository.getCheesySentenceById((long) id);};
     public Optional<Words> findWordById(int id){return wordsRepository.getWordById((long) id);};
 
-    private List<String> alphabetList = new ArrayList<>(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","å","ä","ö"));
-    private CheesySentenceRepository cheesySentenceRepository;
-    private WordsRepository wordsRepository;
+    private final List<String> alphabetList = new ArrayList<>(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","å","ä","ö"));
+    private final CheesySentenceRepository cheesySentenceRepository;
+    private final WordsRepository wordsRepository;
 
     Random ran = new Random();
 
@@ -27,8 +27,6 @@ public class FortuneService {
         this.cheesySentenceRepository = cheesySentenceRepository;
         this.wordsRepository = wordsRepository;
     }
-
-
     // Random factor
     public int random1to29(){
         return ran.nextInt(29) + 1;
@@ -46,10 +44,23 @@ public class FortuneService {
         return findSentenceById(random1to29()).get().getSentence();
     }
 
-    public String processPerson (Person person) {
-        StringBuilder message = new StringBuilder();
-        message.append("Your future will be ");
+    public int processName(Person person){
+        return firstletterToInt(person.getName());
+    }
 
+    public int processAge(Person person){
+        return person.getAge();
+    }
+
+    public int processNationality(Person person){
+        int temp = 0;
+        for (int i = 0; i < person.getNationality().length(); i++) {
+            temp = random1to228();
+        }
+        return temp;
+    }
+
+    public int processGender(Person person){
         int genderInt = 0;
         if(person.getGender().equals("male"))
             genderInt = 1;
@@ -57,28 +68,33 @@ public class FortuneService {
             genderInt = 2;
         else genderInt = 3;
 
+        return genderInt;
+    }
 
-        // first word form first letter in name
-        int temp = firstletterToInt(person.getName());
-        message.append(findWordById(temp).get().getWord());
+    public String buildSentence (Person person) {
 
+        int nameInt = processName(person);
+        int ageInt = processAge(person);
+        int genderInt = processGender(person);
+        int nationalityInt = processNationality(person);
+
+        StringBuilder message = new StringBuilder();
+        message.append("Your future will be ");
+
+        message.append(findWordById(nameInt).get().getWord());
         message.append(" and possibly ");
 
-        temp = person.getAge() + genderInt;
+        int temp = ageInt + genderInt;
+
         // word from age as index, if over 200 add random word
         if (temp < 200) {
             message.append(findWordById(temp).get().getWord().toLowerCase());
         } else {
             message.append(", " + findWordById(random1to228()).get().getWord().toLowerCase());
         }
+
         // third word random from nationality length
-        for (int i = 0; i < person.getNationality().length(); i++) {
-            temp = random1to228();
-        }
-
-        message.append(" and " + findWordById(temp).get().getWord().toLowerCase());
-
-
+        message.append(" and " + findWordById(nationalityInt).get().getWord().toLowerCase());
         return message.toString();
     }
 

@@ -24,7 +24,7 @@ public class FortuneControllerRest {
     public Map<String,String> submitInfo(@PathVariable String name, @PathVariable  int age, @PathVariable  String nationality, @PathVariable  String gender) {
         Person person = new Person(name, nationality, age, gender);
 
-        String message = fortuneService.processPerson(person);
+        String message = fortuneService.buildSentence(person);
         String quote = fortuneService.getRandomQuote();
 
         HashMap<String,String> map = new HashMap<>();
