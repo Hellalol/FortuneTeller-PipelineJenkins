@@ -2,13 +2,11 @@ package com.example.fortuneteller.service;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RandomFactorTest {
 
-    RandomFactor randomFactor = new RandomFactor();
+    FortuneService fortuneService;
 
     @Test
     void random1to29() {
@@ -17,7 +15,7 @@ class RandomFactorTest {
         boolean outOfRange = false;
 
         for (int i = 0; i < 1000; i++) {
-            int randomNumber = randomFactor.random1to29();
+            int randomNumber = fortuneService.random1to29();
             if (randomNumber < lowestAcceptedValue && randomNumber > highestAcceptedValue) {
                 outOfRange = true;
             }
@@ -32,7 +30,7 @@ class RandomFactorTest {
         boolean outOfRange = false;
 
         for (int i = 0; i < 5000; i++) {
-            int randomNumber = randomFactor.random1to29();
+            int randomNumber = fortuneService.random1to29();
             if (randomNumber < lowestAcceptedValue && randomNumber > highestAcceptedValue) {
                 outOfRange = true;
             }

@@ -1,27 +1,41 @@
 package com.example.fortuneteller.service;
 
+import com.example.fortuneteller.domain.CheesySentence;
 import com.example.fortuneteller.domain.Person;
+import com.example.fortuneteller.domain.Words;
+import com.example.fortuneteller.repository.CheesySentenceRepository;
 import com.example.fortuneteller.repository.WordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
-public class Translator {
+public class FortuneService {
 
-    private WordsService wordsService;
-    private CheesySentenceService cheesySentenceService;
-    private RandomFactor randomFactor;
+    public Optional<CheesySentence> findSentenceById(int id){return cheesySentenceRepository.getCheesySentenceById((long) id);};
+    public Optional<Words> findWordById(int id){return wordsRepository.getWordById((long) id);};
+
     private List<String> alphabetList = new ArrayList<>(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","å","ä","ö"));
+    private CheesySentenceRepository cheesySentenceRepository;
+    private WordsRepository wordsRepository;
+
+    Random ran = new Random();
 
     @Autowired
-    public Translator(WordsService wordsService, CheesySentenceService cheesySentenceService, RandomFactor randomFactor) {
-        this.wordsService = wordsService;
-        this.cheesySentenceService = cheesySentenceService;
-        this.randomFactor = randomFactor;
+    public FortuneService(CheesySentenceRepository cheesySentenceRepository, WordsRepository wordsRepository) {
+        this.cheesySentenceRepository = cheesySentenceRepository;
+        this.wordsRepository = wordsRepository;
+    }
+
+
+    // Random factor
+    public int random1to29(){
+        return ran.nextInt(29) + 1;
+    }
+
+    public int random1to228(){
+        return ran.nextInt(228) + 1;
     }
 
     public int firstletterToInt(String name){
@@ -29,7 +43,7 @@ public class Translator {
     }
 
     public String getRandomQuote () {
-        return cheesySentenceService.findSentenceById(randomFactor.random1to29()).get().getSentence();
+        return findSentenceById(random1to29()).get().getSentence();
     }
 
     public String processPerson (Person person) {
@@ -41,32 +55,31 @@ public class Translator {
             genderInt = 1;
         else if (person.getGender().equals("female"))
             genderInt = 2;
-            else genderInt = 3;
+        else genderInt = 3;
 
 
         // first word form first letter in name
         int temp = firstletterToInt(person.getName());
-        message.append(wordsService.findWordById(temp).get().getWord());
+        message.append(findWordById(temp).get().getWord());
 
         message.append(" and possibly ");
 
         temp = person.getAge() + genderInt;
         // word from age as index, if over 200 add random word
         if (temp < 200) {
-            message.append(wordsService.findWordById(temp).get().getWord().toLowerCase());
+            message.append(findWordById(temp).get().getWord().toLowerCase());
         } else {
-            message.append(", " + wordsService.findWordById(randomFactor.random1to228()).get().getWord().toLowerCase());
+            message.append(", " + findWordById(random1to228()).get().getWord().toLowerCase());
         }
         // third word random from nationality length
         for (int i = 0; i < person.getNationality().length(); i++) {
-            temp = randomFactor.random1to228();
+            temp = random1to228();
         }
 
-        message.append(" and " + wordsService.findWordById(temp).get().getWord().toLowerCase());
+        message.append(" and " + findWordById(temp).get().getWord().toLowerCase());
 
 
         return message.toString();
     }
-
 
 }
