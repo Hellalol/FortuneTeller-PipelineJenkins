@@ -13,8 +13,7 @@ import java.util.*;
 @Service
 public class FortuneService {
 
-    public Optional<CheesySentence> findSentenceById(int id){return cheesySentenceRepository.getCheesySentenceById((long) id);};
-    public Optional<Words> findWordById(int id){return wordsRepository.getWordById((long) id);};
+
 
     private final List<String> alphabetList = new ArrayList<>(Arrays.asList("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","å","ä","ö"));
     private final CheesySentenceRepository cheesySentenceRepository;
@@ -27,6 +26,14 @@ public class FortuneService {
         this.cheesySentenceRepository = cheesySentenceRepository;
         this.wordsRepository = wordsRepository;
     }
+
+    public Optional<CheesySentence> findSentenceById(int id){
+        return cheesySentenceRepository.getCheesySentenceById((long) id);
+    }
+    public Optional<Words> findWordById(int id){
+        return wordsRepository.getWordById((long) id);
+    }
+
     // Random factor
     public int random1to29(){
         return ran.nextInt(29) + 1;
@@ -90,7 +97,7 @@ public class FortuneService {
         if (temp < 200) {
             message.append(findWordById(temp).get().getWord().toLowerCase());
         } else {
-            message.append(", " + findWordById(random1to228()).get().getWord().toLowerCase());
+            message.append(findWordById(random1to228()).get().getWord().toLowerCase());
         }
 
         // third word random from nationality length
