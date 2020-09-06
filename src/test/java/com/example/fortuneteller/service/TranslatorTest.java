@@ -25,8 +25,8 @@ class TranslatorTest {
 
     @Test
     void getRandomQuote() {
-        String emptyString = "";
-        log.info(translator.getRandomQuote());
+//        String emptyString = "";
+//        log.info(translator.getRandomQuote());
 //        String randomString = translator.getRandomQuote();
 //        assertNotEquals(emptyString, randomString);
     }
