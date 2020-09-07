@@ -1,47 +1,71 @@
-pipeline{
-    agent {
-        docker{ image 'rasilva1986/java-maven:alm' }
-    }
+pipeline {
 
-    stages {
-        stage('Build'){
+     agent {
+        docker { image 'rasilva1986/java-maven:alm' }
+    }
+     stages {
+        stage('Build') {
+
             steps {
-                echo 'building...'
+                echo 'Building..'
                 sh 'mvn clean install'
             }
+
         }
 
-        stage('Create and publish test reports') {
+        stage('Test') {
             steps {
-            echo 'Publishing test reports'
+                echo 'Testing..'
+                sh 'mvn test'
             }
+
+        }
+
+        stage ('Publish') {
+
+            steps {
+                echo 'Publishing Test Reports...'
+                sh 'mvn surefire-report:report'
+            }
+
             post {
                 always {
                     junit 'target/surefire-reports/.xml'
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: false,
-                        reportDir: 'target/surefire-reports',
-                        reportFiles: 'index.html',
-                        reportName: 'Unit tests',
-                        reportTitles: 'Unit tests'
-                    ])
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: false,
+                            reportDir: 'target/site/',
+                            reportFiles: 'surefire-report.html',
+                            reportName: 'Surefire Test Report',
+                            reportTitles: 'Surefire Test Report'
+                        ])
 
-                    publishHTML([
-                        allowMissing: false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll: false,
-                        reportDir: 'target/site/jacoco',
-                        reportFiles: 'index.html',
-                        reportName: 'Test coverage',
-                        reportTitles: 'Test coverage'
-                    ])
-                }
-
-                // Om det tidigare lyckades. Spara undan .jar filen
-                success {
-                    archive 'target/.jar'
+                        publishHTML([
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: false,
+                            reportDir: 'target/site/jacoco/',
+                            reportFiles: 'index.html',
+                            reportName: 'Jacoco Test coverage',
+                            reportTitles: 'Jacoco Test coverage'
+                        ])
                 }
             }
         }
+
+        stage('Saving artifacts') {
+
+            steps {
+                echo 'Saving war file ...'
+                }
+
+            post {
+                always {
+                    echo 'Saving artifacts..'
+                    archiveArtifacts artifacts: 'target/.war', onlyIfSuccessful: true
+                }
+            }
+        }
+     }
+}

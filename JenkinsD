@@ -1,6 +1,6 @@
 pipeline {
 
-     agent { docker
+     agent any
      stages {
         stage ('Deploy') {
             steps {
@@ -9,5 +9,4 @@ pipeline {
             }
         }
      }
-}
 }
