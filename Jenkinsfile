@@ -55,7 +55,7 @@ pipeline {
             post {
                 always {
                     echo 'Saving artifacts..'
-                    archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'target/.jar', onlyIfSuccessful: true
                 }
             }
         }
