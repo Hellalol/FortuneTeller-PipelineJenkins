@@ -1,12 +1,12 @@
 pipeline {
 
-     agent any
+        agent {
+            docker { image 'rasilva1986/java-maven:alm' }
+        }
+
      stages {
         stage('Build') {
 
-            agent {
-                docker { image 'rasilva1986/java-maven:alm' }
-            }
 
             steps {
                 echo 'Building..'
@@ -52,6 +52,7 @@ pipeline {
                             reportName: 'Jacoco Test coverage',
                             reportTitles: 'Jacoco Test coverage'
                         ])
+
                 }
             }
         }
