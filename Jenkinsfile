@@ -65,7 +65,7 @@ pipeline {
             post {
                 always {
                     echo 'Saving artifacts..'
-                    archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'target/fortune-teller-0.0.1-SNAPSHOT.war', onlyIfSuccessful: true
                 }
             }
         }
