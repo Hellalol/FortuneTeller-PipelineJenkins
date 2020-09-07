@@ -13,15 +13,8 @@ public class CheesySentence {
     private long id;
     private String sentence;
 
-    public long getId() {
-        return id;
-    }
-
     public String getSentence() {
         return sentence;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 }
