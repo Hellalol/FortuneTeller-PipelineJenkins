@@ -93,7 +93,9 @@ public class FortuneService {
 
         int temp = ageInt + genderInt;
 
+
         message.append(findWordById(temp).get().getWord().toLowerCase());
+
 
         // third word random from nationality length
         message.append(" and " + findWordById(nationalityInt).get().getWord().toLowerCase());
