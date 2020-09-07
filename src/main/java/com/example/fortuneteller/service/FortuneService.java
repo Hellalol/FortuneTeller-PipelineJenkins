@@ -93,12 +93,7 @@ public class FortuneService {
 
         int temp = ageInt + genderInt;
 
-        // word from age as index, if over 200 add random word
-        if (temp < 200) {
-            message.append(findWordById(temp).get().getWord().toLowerCase());
-        } else {
-            message.append(findWordById(random1to228()).get().getWord().toLowerCase());
-        }
+        message.append(findWordById(temp).get().getWord().toLowerCase());
 
         // third word random from nationality length
         message.append(" and " + findWordById(nationalityInt).get().getWord().toLowerCase());
