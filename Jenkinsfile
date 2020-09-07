@@ -1,12 +1,12 @@
 pipeline {
 
-     agent any
+        agent {
+            docker { image 'rasilva1986/java-maven:alm' }
+        }
+
      stages {
         stage('Build') {
 
-            agent {
-                docker { image 'rasilva1986/java-maven:alm' }
-            }
 
             steps {
                 echo 'Building..'
@@ -32,7 +32,7 @@ pipeline {
 
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/.xml'
                         publishHTML([
                             allowMissing: false,
                             alwaysLinkToLastBuild: false,
@@ -65,7 +65,7 @@ pipeline {
             post {
                 always {
                     echo 'Saving artifacts..'
-                    archiveArtifacts artifacts: 'target/*.war', onlyIfSuccessful: true
+                    archiveArtifacts artifacts: 'target/.war', onlyIfSuccessful: true
                 }
             }
         }
