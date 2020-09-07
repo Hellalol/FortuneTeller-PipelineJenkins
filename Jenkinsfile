@@ -42,16 +42,6 @@ pipeline {
                             reportName: 'Surefire Test Report',
                             reportTitles: 'Surefire Test Report'
                         ])
-
-                        publishHTML([
-                            allowMissing: false,
-                            alwaysLinkToLastBuild: false,
-                            keepAll: false,
-                            reportDir: 'target/site/jacoco/',
-                            reportFiles: 'index.html',
-                            reportName: 'Jacoco Test coverage',
-                            reportTitles: 'Jacoco Test coverage'
-                        ])
                 }
             }
         }
